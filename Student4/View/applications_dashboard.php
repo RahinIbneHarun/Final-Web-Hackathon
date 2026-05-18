@@ -3,12 +3,12 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
 if(!isset($_SESSION["role"]) || $_SESSION["role"] != "employer"){
-    echo "Only employer can use this page.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -16,12 +16,12 @@ $db = new DatabaseConnection();
 $connection = $db->openConnection();
 $employer_id = $_SESSION["user_id"];
 
-$selected_job_id = $_GET["job_id"] ?? "";
-$selected_status = $_GET["status"] ?? "";
+$selected_job_id = "";
+$selected_status = "";
 
 $jobs = $db->getEmployerJobs($connection, $employer_id);
 $summary = $db->getApplicationSummary($connection, $employer_id);
-$applications = $db->getEmployerApplications($connection, $employer_id, $selected_job_id, $selected_status);
+$applications = $db->getEmployerApplications($connection, $employer_id, "", "");
 
 $message = $_SESSION["application_message"] ?? "";
 unset($_SESSION["application_message"]);
@@ -64,129 +64,39 @@ $funnel_steps = [
         <style>
             body{
                 font-family: Arial, sans-serif;
-                max-width: 1180px;
-                margin: 0 auto;
-                padding: 24px;
-                background-color: #eef3ef;
-                color: #1f2937;
-            }
-            a{
-                color: #1a5fb4;
-                text-decoration: none;
-            }
-            a:hover{
-                text-decoration: underline;
-            }
-            h1{
-                margin-bottom: 8px;
-            }
-            h2{
-                margin: 0 0 14px 0;
-                font-size: 22px;
+                margin: 24px;
             }
             .summary-box{
                 display: inline-block;
-                min-width: 150px;
-                padding: 16px;
-                margin: 0 12px 12px 0;
-                background-color: #ffffff;
-                border: 1px solid #d7dfd8;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                min-width: 140px;
+                padding: 12px;
+                border: 1px solid;
+                margin: 0 10px 10px 0;
                 vertical-align: top;
             }
-            .filter-box{
-                background-color: #ffffff;
-                border: 1px solid #d7dfd8;
-                padding: 18px;
+            .filter-box, .funnel-box{
                 margin: 18px 0;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                padding: 14px;
+                border: 1px solid;
             }
             table{
-                border-collapse: collapse;
                 width: 100%;
-                background-color: #ffffff;
-                border: 1px solid #d7dfd8;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                border-collapse: collapse;
             }
             th, td{
-                padding: 12px;
+                padding: 10px;
                 text-align: left;
                 vertical-align: top;
-                border-bottom: 1px solid #e7ece8;
-            }
-            th{
-                background-color: #dff0e3;
-                color: #164e2b;
-            }
-            select, input[type="submit"]{
-                padding: 9px 10px;
-                border: 1px solid #b8c9bc;
-                border-radius: 6px;
-                margin-right: 10px;
-                margin-top: 8px;
-            }
-            input[type="submit"]{
-                border-color: #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-            }
-            input[type="submit"]:hover{
-                background-color: #146c43;
-            }
-            .nav-button{
-                padding: 9px 15px;
-                border: 1px solid #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-                margin-right: 8px;
-                border-radius: 6px;
-            }
-            .nav-button:hover{
-                background-color: #146c43;
-            }
-            .message{
-                color: #166534;
-                font-weight: bold;
-                padding: 10px 14px;
-                background-color: #ecfdf3;
-                border: 1px solid #bbf7d0;
-                border-radius: 8px;
-            }
-            .funnel-box{
-                background-color: #ffffff;
-                border: 1px solid #d7dfd8;
-                padding: 18px;
-                margin: 18px 0;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            }
-            .funnel-title{
-                margin-top: 0;
-                margin-bottom: 15px;
             }
             .funnel-step{
-                color: #ffffff;
-                text-align: center;
-                padding: 12px 10px;
-                margin: 10px auto;
-                font-weight: bold;
-                border-radius: 4px;
+                padding: 10px;
+                margin: 8px 0;
+                border: 1px solid;
             }
-            .funnel-empty{
-                margin: 0;
-                color: #555;
-            }
-            p{
-                line-height: 1.5;
-            }
-            table tr:hover td{
-                background-color: #f7fbf8;
+            .nav-button, input[type="submit"], select{
+                padding: 8px 14px;
+                margin-right: 8px;
+                margin-bottom: 8px;
             }
         </style>
     </head>
@@ -231,7 +141,7 @@ $funnel_steps = [
             <?php
             if($total_applications > 0){
                 foreach($funnel_steps as $step){
-                    echo "<div class='funnel-step' style='width: ".$step["width"]."%; background-color: ".$step["color"].";'>";
+                    echo "<div class='funnel-step'>";
                     echo $step["label"]." - ".$step["count"];
                     echo "</div>";
                 }
@@ -242,9 +152,9 @@ $funnel_steps = [
         </div>
 
         <div class="filter-box">
-            <form method="get" action="applications_dashboard.php">
+            <form onsubmit="return false;">
                 <label>Filter by Job</label>
-                <select name="job_id">
+                <select name="job_id" id="jobFilter" onchange="filterApplications()" onkeyup="filterApplications()">
                     <option value="">All Jobs</option>
                     <?php
                     if($jobs && $jobs->num_rows > 0){
@@ -260,7 +170,7 @@ $funnel_steps = [
                 </select>
 
                 <label>Status</label>
-                <select name="status">
+                <select name="status" id="statusFilter" onchange="filterApplications()" onkeyup="filterApplications()">
                     <option value="">All Status</option>
                     <option value="Submitted" <?php if($selected_status == "Submitted"){ echo "selected"; } ?>>Submitted</option>
                     <option value="Reviewed" <?php if($selected_status == "Reviewed"){ echo "selected"; } ?>>Reviewed</option>
@@ -268,12 +178,12 @@ $funnel_steps = [
                     <option value="Rejected" <?php if($selected_status == "Rejected"){ echo "selected"; } ?>>Rejected</option>
                 </select>
 
-                <input type="submit" value="Filter">
-                <button type="button" class="nav-button" onclick="window.location.href='applications_dashboard.php'">Reset</button>
+                <button type="button" class="nav-button" onclick="filterApplications()">Filter</button>
+                <button type="button" class="nav-button" onclick="resetApplicationFilters()">Reset</button>
             </form>
         </div>
 
-        <table border="1">
+        <table border="1" id="applicationTable">
             <tr>
                 <th>Job Title</th>
                 <th>Applicant Name</th>
@@ -300,5 +210,39 @@ $funnel_steps = [
             }
             ?>
         </table>
+        <script>
+            function filterApplications(){
+                var jobFilter = document.getElementById("jobFilter").options[document.getElementById("jobFilter").selectedIndex].text.toLowerCase();
+                var statusFilter = document.getElementById("statusFilter").value.toLowerCase();
+                var table = document.getElementById("applicationTable");
+                var rows = table.getElementsByTagName("tr");
+
+                for(var i = 1; i < rows.length; i++){
+                    var cells = rows[i].getElementsByTagName("td");
+
+                    if(cells.length < 6){
+                        continue;
+                    }
+
+                    var jobTitle = cells[0].innerText.toLowerCase();
+                    var statusText = cells[3].innerText.toLowerCase();
+
+                    var jobMatch = jobFilter == "" || jobFilter == "all jobs" || jobTitle == jobFilter;
+                    var statusMatch = statusFilter == "" || statusText == statusFilter;
+
+                    if(jobMatch && statusMatch){
+                        rows[i].style.display = "";
+                    }else{
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+
+            function resetApplicationFilters(){
+                document.getElementById("jobFilter").selectedIndex = 0;
+                document.getElementById("statusFilter").selectedIndex = 0;
+                filterApplications();
+            }
+        </script>
     </body>
 </html>

@@ -3,12 +3,12 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
 if(!isset($_SESSION["role"]) || $_SESSION["role"] != "employer"){
-    echo "Only employer can use this page.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -33,74 +33,21 @@ unset($_SESSION["application_message"]);
         <style>
             body{
                 font-family: Arial, sans-serif;
-                max-width: 980px;
-                margin: 0 auto;
-                padding: 24px;
-                background-color: #eef3ef;
-                color: #1f2937;
-            }
-            h1{
-                margin-bottom: 12px;
+                margin: 24px;
             }
             .details-box{
-                background-color: #ffffff;
-                border: 1px solid #d7dfd8;
-                padding: 24px;
                 max-width: 900px;
-                border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            }
-            .message{
-                color: #166534;
-                font-weight: bold;
-                padding: 10px 14px;
-                background-color: #ecfdf3;
-                border: 1px solid #bbf7d0;
-                border-radius: 8px;
-            }
-            select, input[type="submit"]{
-                padding: 9px 10px;
-                border: 1px solid #b8c9bc;
-                border-radius: 6px;
-            }
-            input[type="submit"]{
-                border-color: #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-            }
-            input[type="submit"]:hover{
-                background-color: #146c43;
-            }
-            .nav-button{
-                padding: 9px 15px;
-                border: 1px solid #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-                border-radius: 6px;
-            }
-            .nav-button:hover{
-                background-color: #146c43;
-            }
-            a{
-                color: #1a5fb4;
-                text-decoration: none;
-            }
-            a:hover{
-                text-decoration: underline;
+                padding: 14px;
+                border: 1px solid;
             }
             .details-box p{
-                margin: 0 0 14px 0;
-                line-height: 1.6;
+                margin-bottom: 12px;
             }
-            .details-box strong{
-                color: #14532d;
+            .nav-button, input[type="submit"], select{
+                padding: 8px 14px;
             }
             hr{
-                border: none;
-                border-top: 1px solid #d7dfd8;
-                margin: 22px 0;
+                margin: 18px 0;
             }
         </style>
     </head>
