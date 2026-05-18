@@ -1,4 +1,3 @@
-/* Basic Reset */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,7 +5,6 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Header Styling */
 .header {
     background-color: #333;
     color: white;
@@ -32,7 +30,6 @@ body {
     padding: 5px;
 }
 
-/* Sidebar Menu (Hidden by default) */
 .sidebar {
     display: none;
     background-color: #222;
@@ -50,7 +47,6 @@ body {
     background-color: #444;
 }
 
-/* Container & Grid layout for Square boxes */
 .container {
     padding: 20px;
 }
@@ -60,7 +56,6 @@ body {
     gap: 15px;
 }
 
-/* Square Shape Job Box */
 .job-box {
     background: white;
     padding: 15px;
@@ -79,7 +74,6 @@ body {
     border-radius: 4px;
 }
 
-/* Form layout for profile */
 .form-group {
     margin-bottom: 10px;
 }
@@ -92,7 +86,6 @@ body {
     padding: 6px;
 }
 
-/* Footer Styling */
 .footer {
     background-color: #333;
     color: white;
@@ -103,7 +96,6 @@ body {
     width: 100%;
 }
 
-/* Job Details & Form styling */
 .details-box, .form-card {
     background: #ffffff;
     padding: 20px;
