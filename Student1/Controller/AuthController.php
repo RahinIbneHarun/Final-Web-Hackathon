@@ -33,7 +33,7 @@ if (isset($_POST["register"])) {
     if ($file && $file["error"] == 0) {
         $allowed_mimes = [];
 
-        if ($role == "employer") {
+        if  ($role == "employer") {
             $allowed_mimes = ["image/jpeg", "image/png"];
         } else if ($role == "seeker") {
             $allowed_mimes = ["application/pdf"];
