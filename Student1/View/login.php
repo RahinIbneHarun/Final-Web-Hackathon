@@ -24,6 +24,7 @@ unset($_SESSION["login_old_email"]);
     <style>
         body{
             font-family: Arial, sans-serif;
+<<<<<<< HEAD
             margin: 20px;
             background-color: #f8f8f8;
         }
@@ -49,10 +50,36 @@ unset($_SESSION["login_old_email"]);
             border: 1px solid #999;
             background-color: #f4f4f4;
             cursor: pointer;
+=======
+            margin: 24px;
+        }
+        .login-card{
+            max-width: 560px;
+        }
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td{
+            padding: 10px;
+            vertical-align: top;
+        }
+        input{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+        }
+        .nav-button, input[type="submit"]{
+            padding: 8px 14px;
+>>>>>>> 6ceca37 (updated project)
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+    <div class="login-card">
+>>>>>>> 6ceca37 (updated project)
     <h2>Login</h2>
 
     <?php if($successMsg) echo "<p class='success'>$successMsg</p>"; ?>
@@ -66,7 +93,11 @@ unset($_SESSION["login_old_email"]);
 
             <tr>
                 <td>Password</td>
+<<<<<<< HEAD
                 <td><input type="password" name="password" placeholder="Enter your password" required /></td>
+=======
+                <td><input type="password" id="login_password" name="password" placeholder="Enter your password" required /></td>
+>>>>>>> 6ceca37 (updated project)
             </tr>
 
             <tr>
@@ -88,5 +119,9 @@ unset($_SESSION["login_old_email"]);
             </tr>
         </table>
     </form>
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> 6ceca37 (updated project)
 </body>
 </html>

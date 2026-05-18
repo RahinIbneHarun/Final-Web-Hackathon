@@ -26,6 +26,7 @@ unset($_SESSION["profile_message"]);
     <style>
         body{
             font-family: Arial, sans-serif;
+<<<<<<< HEAD
             margin: 20px;
             background-color: #f8f8f8;
         }
@@ -49,10 +50,33 @@ unset($_SESSION["profile_message"]);
         }
         .button-row{
             margin-top: 15px;
+=======
+            margin: 24px;
+        }
+        .dashboard-card{
+            max-width: 900px;
+        }
+        .button-row{
+            margin-top: 14px;
+        }
+        .nav-button{
+            padding: 8px 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .notice{
+            padding: 12px;
+            margin-bottom: 14px;
+            border: 1px solid;
+>>>>>>> 6ceca37 (updated project)
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+    <div class="dashboard-card">
+>>>>>>> 6ceca37 (updated project)
     <h2>Employer Dashboard</h2>
     <p>Welcome, <?php echo $name; ?>!</p>
     <p>Email: <?php echo $email; ?></p>
@@ -80,5 +104,9 @@ unset($_SESSION["profile_message"]);
     <div class="button-row">
         <button type="button" class="nav-button" onclick="window.location.href='../Controller/logout.php'">Logout</button>
     </div>
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> 6ceca37 (updated project)
 </body>
 </html>

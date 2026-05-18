@@ -37,6 +37,7 @@ unset($_SESSION["profile_message"]);
     <style>
         body{
             font-family: Arial, sans-serif;
+<<<<<<< HEAD
             margin: 20px;
             background-color: #f8f8f8;
         }
@@ -63,10 +64,33 @@ unset($_SESSION["profile_message"]);
             border: 1px solid #999;
             background-color: #f4f4f4;
             cursor: pointer;
+=======
+            margin: 24px;
+        }
+        .profile-card{
+            max-width: 860px;
+        }
+        fieldset{
+            margin-bottom: 16px;
+            padding: 14px;
+        }
+        input[type="text"], input[type="password"], input[type="number"], textarea, input[type="file"]{
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+            padding: 8px;
+        }
+        .nav-button, input[type="submit"]{
+            padding: 8px 14px;
+>>>>>>> 6ceca37 (updated project)
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+    <div class="profile-card">
+>>>>>>> 6ceca37 (updated project)
     <h2>Profile</h2>
 
     <?php if($message) echo "<p class='success'><strong>".$message."</strong></p>"; ?>
@@ -148,5 +172,9 @@ unset($_SESSION["profile_message"]);
 
         <input type="submit" name="save_profile" value="Save Profile">
     </form>
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> 6ceca37 (updated project)
 </body>
 </html>
