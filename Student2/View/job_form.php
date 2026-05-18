@@ -3,12 +3,12 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
 if(!isset($_SESSION["role"]) || $_SESSION["role"] != "employer"){
-    echo "Only employer can use this page.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -27,7 +27,7 @@ if($job_id){
         $job = $result->fetch_assoc();
         $isEdit = true;
     }else{
-        echo "You can edit only your own jobs.";
+        header("Location: employer_dashboard.php");
         exit();
     }
 }
