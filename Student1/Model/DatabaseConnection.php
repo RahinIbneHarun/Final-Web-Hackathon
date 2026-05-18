@@ -32,8 +32,6 @@ class DatabaseConnection {
         return $result;
     }
 
-<<<<<<< HEAD
-=======
     function GetUserByNameWithPrepareStmt($connection, $tableName, $name){
         $sql = "SELECT * FROM $tableName WHERE name = ?";
         $statement = $connection->prepare($sql);
@@ -44,7 +42,6 @@ class DatabaseConnection {
         return $result;
     }
 
->>>>>>> 6ceca37 (updated project)
     function GetUserByIdWithPrepareStmt($connection, $tableName, $user_id){
         $sql = "SELECT * FROM $tableName WHERE id = ?";
         $statement = $connection->prepare($sql);
