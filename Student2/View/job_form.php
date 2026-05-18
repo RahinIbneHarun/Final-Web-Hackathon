@@ -94,11 +94,23 @@ $deadline_value = $old["deadline"] ?? ($job["deadline"] ?? "");
             input[type="submit"]:hover{
                 background-color: #146c43;
             }
+            .nav-button{
+                padding: 9px 14px;
+                border: 1px solid #198754;
+                background-color: #198754;
+                color: #ffffff;
+                cursor: pointer;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            .nav-button:hover{
+                background-color: #146c43;
+            }
         </style>
     </head>
     <body>
         <h1><?php if($isEdit){ echo "Edit Job"; }else{ echo "Create Job"; } ?></h1>
-        <a href="employer_dashboard.php">Back to Dashboard</a>
+        <button type="button" class="nav-button" onclick="window.location.href='employer_dashboard.php'">Back to Dashboard</button>
 
         <?php
         if(isset($errors["general"])){

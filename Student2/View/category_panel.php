@@ -86,6 +86,19 @@ if($name_value == "" && $isEdit){
             input[type="submit"]:hover{
                 background-color: #146c43;
             }
+            .nav-button{
+                padding: 9px 14px;
+                border: 1px solid #198754;
+                background-color: #198754;
+                color: #ffffff;
+                cursor: pointer;
+                border-radius: 4px;
+                margin-right: 8px;
+                margin-bottom: 8px;
+            }
+            .nav-button:hover{
+                background-color: #146c43;
+            }
             table{
                 border-collapse: collapse;
                 width: 100%;
@@ -113,7 +126,7 @@ if($name_value == "" && $isEdit){
     </head>
     <body>
         <h1>Admin Category Panel</h1>
-        <a href="employer_dashboard.php">Back to Dashboard</a>
+        <button type="button" class="nav-button" onclick="window.location.href='employer_dashboard.php'">Back to Dashboard</button>
 
         <hr>
 
@@ -140,7 +153,7 @@ if($name_value == "" && $isEdit){
             <?php echo $name_error; ?>
             <br><br>
             <input type="submit" value="<?php if($isEdit){ echo "Update Category"; }else{ echo "Create Category"; } ?>">
-            <a href="category_panel.php">Reset</a>
+            <button type="button" class="nav-button" onclick="window.location.href='category_panel.php'">Reset</button>
         </form>
 
         <h2>All Categories</h2>
@@ -159,7 +172,7 @@ if($name_value == "" && $isEdit){
                     echo "<td>".$row["name"]."</td>";
                     echo "<td>".$row["job_count"]."</td>";
                     echo "<td>
-                            <a href='category_panel.php?edit=".$row["id"]."'>Edit</a>
+                            <button type='button' class='nav-button' onclick=\"window.location.href='category_panel.php?edit=".$row["id"]."'\">Edit</button>
                             <form method='post' action='../Controller/categoryHandler.php' style='display:inline;' onsubmit='return confirm(\"Delete this category?\")'>
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='".$row["id"]."'>

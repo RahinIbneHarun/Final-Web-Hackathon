@@ -73,6 +73,18 @@ unset($_SESSION["job_message"]);
             button:hover, input[type="submit"]:hover{
                 background-color: #146c43;
             }
+            .nav-button{
+                margin-right: 8px;
+                margin-bottom: 8px;
+            }
+            .status-button{
+                min-width: 90px;
+                border-color: #198754;
+            }
+            .status-label{
+                color: #ffffff;
+                font-weight: bold;
+            }
             form{
                 margin: 0;
             }
@@ -90,11 +102,11 @@ unset($_SESSION["job_message"]);
     <body>
         <h1>Employer Job Dashboard</h1>
         <p>Hello, <?php echo $_SESSION["name"] ?? "Employer"; ?></p>
-        <a href="job_form.php">Post New Job</a>
-        | <a href="../../Student4/View/applications_dashboard.php">Open Student4 Applications Dashboard</a>
+        <button type="button" class="nav-button" onclick="window.location.href='job_form.php'">Post New Job</button>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student4/View/applications_dashboard.php'">Applications Dashboard</button>
         <?php
         if($isAdmin){
-            echo " | <a href='category_panel.php'>Manage Categories</a>";
+            echo "<button type='button' class='nav-button' onclick=\"window.location.href='category_panel.php'\">Manage Categories</button>";
         }
         ?>
 
@@ -122,11 +134,11 @@ unset($_SESSION["job_message"]);
             if($jobs && $jobs->num_rows > 0){
                 while($row = $jobs->fetch_assoc()){
                     $status_text = "Closed";
-                    $status_color = "red";
+                    $status_background = "#dc3545";
 
                     if($row["status"] == "active"){
                         $status_text = "Active";
-                        $status_color = "green";
+                        $status_background = "#198754";
                     }
 
                     echo "<tr>";
@@ -135,12 +147,12 @@ unset($_SESSION["job_message"]);
                     echo "<td>".$row["deadline"]."</td>";
                     echo "<td>".$row["application_count"]."</td>";
                     echo "<td>
-                            <button type='button' onclick='toggleStatus(".$row["id"].", this)'>
-                                <font color='".$status_color."' class='status-label'>".$status_text."</font>
+                            <button type='button' class='status-button' style='background-color: ".$status_background."; border-color: ".$status_background.";' onclick='toggleStatus(".$row["id"].", this)'>
+                                <span class='status-label'>".$status_text."</span>
                             </button>
                           </td>";
                     echo "<td>
-                            <a href='job_form.php?id=".$row["id"]."'>Edit</a>
+                            <button type='button' class='nav-button' onclick=\"window.location.href='job_form.php?id=".$row["id"]."'\">Edit</button>
                             <form method='post' action='../Controller/jobHandler.php' style='display:inline;' onsubmit='return confirm(\"Delete this job?\")'>
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='".$row["id"]."'>
@@ -170,7 +182,14 @@ unset($_SESSION["job_message"]);
 
                             if(response.success){
                                 label.innerHTML = response.label;
-                                label.color = response.color;
+                                label.style.color = "white";
+                                if(response.color === "green"){
+                                    button.style.backgroundColor = "#198754";
+                                    button.style.borderColor = "#198754";
+                                }else{
+                                    button.style.backgroundColor = "#dc3545";
+                                    button.style.borderColor = "#dc3545";
+                                }
                                 message.innerHTML = "Job status updated successfully.";
                             }else{
                                 message.innerHTML = response.message;
