@@ -47,7 +47,7 @@ if (isset($_POST['update_profile'])) {
             if($resume_name != "") {
                 $_SESSION['file_path'] = $resume_path;
             }
-            echo "<script>alert('Profile Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
+            echo "<script>alert('Your Profile is Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
         } else {
             echo "Error: " . mysqli_error($conn);
         }
