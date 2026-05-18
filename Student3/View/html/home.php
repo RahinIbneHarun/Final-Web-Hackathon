@@ -1,14 +1,19 @@
 <?php
 session_start();
 include '../../db.php'; 
+require_once '../../Model/JobModel.php';
 /** @var mysqli $conn */
 
-if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
-    header("Location: ../../../Student1/View/login.php");
-    exit();
+$jobModel = new JobModel();
+$logged_in_user = "Guest";
+if (isset($_SESSION['user_id'])) {
+    $current_user = $jobModel->getUserById(intval($_SESSION['user_id']));
+    if ($current_user && !empty($current_user['name'])) {
+        $logged_in_user = $current_user['name'];
+    }
+} elseif (isset($_SESSION['user_name'])) {
+    $logged_in_user = $_SESSION['user_name'];
 }
-
-$logged_in_user = isset($_SESSION['name']) ? $_SESSION['name'] : "Job Seeker"; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,11 +26,11 @@ $logged_in_user = isset($_SESSION['name']) ? $_SESSION['name'] : "Job Seeker";
 
     <header class="header">
         <div class="header-left">
-            <button onclick="toggleMenu()" class="menu-btn">&#9776;</button>
+            <button id="menuToggle" class="menu-btn">&#9776;</button>
             <h2>Job Dashboard</h2>
         </div>
         <div class="header-right">
-            <span>Welcome, <strong><?php echo $logged_in_user; ?></strong></span>
+            <span>Welcome, <strong><?php echo htmlspecialchars($logged_in_user, ENT_QUOTES, 'UTF-8'); ?></strong></span>
             <input type="text" id="searchBox" placeholder="Search jobs..." onkeyup="liveSearch()">
         </div>
     </header>
@@ -34,7 +39,7 @@ $logged_in_user = isset($_SESSION['name']) ? $_SESSION['name'] : "Job Seeker";
         <a href="profile.php">Profile Page</a>
         <a href="saved_jobs.php">Saved Job List</a>
         <a href="applied_jobs.php">My Apply List</a>
-        <a href="../../Controller/php/logout.php">Log Out</a>
+        <a href="../../../Student1/Controller/logout.php">Log Out</a>
     </nav>
 
     <main class="container" style="margin-bottom: 80px;">
@@ -43,9 +48,8 @@ $logged_in_user = isset($_SESSION['name']) ? $_SESSION['name'] : "Job Seeker";
             <select id="filterCategory" onchange="applyFilter()">
                 <option value="">Select Category</option>
                 <?php
-                $cat_sql = "SELECT * FROM categories";
-                $cat_result = mysqli_query($conn, $cat_sql);
-                while($cat = mysqli_fetch_assoc($cat_result)) {
+                $cat_result = $jobModel->getCategories();
+                while($cat = $cat_result->fetch_assoc()) {
                     echo "<option value='".$cat['id']."'>".$cat['name']."</option>";
                 }
                 ?>
@@ -77,16 +81,13 @@ $logged_in_user = isset($_SESSION['name']) ? $_SESSION['name'] : "Job Seeker";
         
         <div id="jobContainer" class="job-grid">
             <?php
-            $sql = "SELECT * FROM jobs WHERE status = 'active' ORDER BY id DESC";
-            $result = mysqli_query($conn, $sql);
+            $result = $jobModel->getActiveJobs();
 
-            if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
+            if ($result && $result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
                     $emp_id = $row['employer_id'];
-                    $emp_sql = "SELECT company_name FROM employer_profiles WHERE user_id = $emp_id";
-                    $emp_result = mysqli_query($conn, $emp_sql);
-                    $emp_row = mysqli_fetch_assoc($emp_result);
-                    $company_name = isset($emp_row['company_name']) ? $emp_row['company_name'] : 'N/A';
+                    $company_name = $jobModel->getCompanyNameByUserId($emp_id);
+                    $company_name = $company_name ? $company_name : 'N/A';
                     ?>
                     <div class="job-box">
                         <h4><?php echo $row['title']; ?></h4>
@@ -105,7 +106,7 @@ $logged_in_user = isset($_SESSION['name']) ? $_SESSION['name'] : "Job Seeker";
     </main>
 
     <footer class="footer">
-        <p>&copy; 2026 Job Portal. All Rights Reserved.</p>
+        <p>&copy; This portal is developed by Rahin</p>
     </footer>
 
     <script src="../../Controller/js/main.js"></script>

@@ -1,41 +1,25 @@
 <?php
 session_start();
 include '../../db.php';
+require_once '../../Model/JobModel.php';
 /** @var mysqli $conn */
 
-if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
-    header("Location: ../../../Student1/View/login.php");
-    exit();
-}
-
+$jobModel = new JobModel();
 $job_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
-$user_id = intval($_SESSION['user_id']); 
-$job_query = "SELECT * FROM jobs WHERE id = $job_id";
-$job_result = mysqli_query($conn, $job_query);
-$job = mysqli_fetch_assoc($job_result);
+$user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 1;
+$job = $jobModel->getJobById($job_id);
 
 if (!$job) {
     die("Job not found!");
 }
 $emp_id = $job['employer_id'];
-$emp_query = "SELECT company_name FROM employer_profiles WHERE user_id = $emp_id";
-$emp_result = mysqli_query($conn, $emp_query);
-$emp_data = mysqli_fetch_assoc($emp_result);
-$company_name = isset($emp_data['company_name']) ? $emp_data['company_name'] : 'N/A';
+$company_name = $jobModel->getCompanyNameByUserId($emp_id);
+$company_name = $company_name ? $company_name : 'N/A';
 
-$save_query = "SELECT * FROM saved_jobs WHERE job_id = $job_id AND user_id = $user_id";
-$save_result = mysqli_query($conn, $save_query);
-$is_saved = mysqli_num_rows($save_result) > 0;
+$is_saved = $jobModel->isJobSaved($user_id, $job_id);
 
-$apply_query = "SELECT status FROM applications WHERE job_id = $job_id AND seeker_id = $user_id";
-$apply_result = mysqli_query($conn, $apply_query);
-
-if (mysqli_num_rows($apply_result) > 0) {
-    $apply_data = mysqli_fetch_assoc($apply_result);
-    $status = $apply_data['status']; 
-} else {
-    $status = "Not Applied";
-}
+$status = $jobModel->getApplicationStatus($job_id, $user_id);
+$status = $status ? $status : 'Not Applied';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,9 +59,7 @@ if (mysqli_num_rows($apply_result) > 0) {
             <a href="application_form.php?id=<?php echo $job_id; ?>" class="apply-btn">Apply Now</a>
         </div>
         <br>
-        <div style="text-align:center;">
-            <button type="button" class="nav-button" onclick="window.location.href='home.php'">Back to Dashboard</button>
-        </div>
+        <a href="home.php" style="display:block; text-align:center;">Back to Dashboard</a>
     </div>
 </body>
 </html>

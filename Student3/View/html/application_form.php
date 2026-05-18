@@ -1,24 +1,19 @@
 <?php
 session_start();
 include '../../db.php'; 
+require_once '../../Model/JobModel.php';
 /** @var mysqli $conn */
 
-if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
-    header("Location: ../../../Student1/View/login.php");
-    exit();
-}
-
+$jobModel = new JobModel();
 $job_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($job_id === 0) {
     header("Location: home.php");
     exit();
 }
-$user_id = intval($_SESSION['user_id']);
+$user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 1;
 
-$job_sql = "SELECT title FROM jobs WHERE id = $job_id";
-$job_result = mysqli_query($conn, $job_sql);
-$job_data = mysqli_fetch_assoc($job_result);
+$job_data = $jobModel->getJobById($job_id);
 $job_title = isset($job_data['title']) ? $job_data['title'] : "Selected Job";
 ?>
 <!DOCTYPE html>
@@ -53,7 +48,7 @@ $job_title = isset($job_data['title']) ? $job_data['title'] : "Selected Job";
                 <br>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <button type="submit" name="action" value="submit_application" class="apply-btn" style="border: none; cursor: pointer; padding: 10px 25px; font-weight: bold;">Submit Application</button>
-                    <button type="button" class="nav-button" onclick="window.location.href='job_details.php?id=<?php echo $job_id; ?>'">Cancel</button>
+                    <a href="job_details.php?id=<?php echo $job_id; ?>" style="color: #dc3545; text-decoration: none; font-weight: bold;">Cancel</a>
                 </div>
             </form>
         </div>

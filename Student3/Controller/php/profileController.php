@@ -1,19 +1,17 @@
 <?php
 session_start();
 include '../../db.php'; 
+require_once '../../Model/JobModel.php';
 /** @var mysqli $conn */
 
-if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
-    header("Location: ../../../Student1/View/login.php");
-    exit();
-}
+$jobModel = new JobModel();
 
 if (isset($_POST['update_profile'])) {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $skills = mysqli_real_escape_string($conn, $_POST['skills']);
-    $experience = intval($_POST['experience'] ?? 0);
-    $user_id = intval($_SESSION['user_id']); 
+    $experience = mysqli_real_escape_string($conn, $_POST['experience']);
+    $user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : intval($_POST['id']);
 
     $resume_name = "";
     if (!empty($_FILES['resume_file']['name'])) {
@@ -23,40 +21,16 @@ if (isset($_POST['update_profile'])) {
         move_uploaded_file($_FILES["resume_file"]["tmp_name"], $target_file);
     }
 
-    $sql = "UPDATE users SET name='$name', email='$email'";
-    if($resume_name != "") {
-        $resume_path = "/Web%20Tech%20Project/Student3/View/asset/" . $resume_name;
-        $sql .= ", file_path='$resume_path'";
-    }
-    $sql .= " WHERE id='$user_id'";
-
-    if(mysqli_query($conn, $sql)) {
-        $check_sql = "SELECT * FROM seeker_profiles WHERE user_id = $user_id";
-        $check_result = mysqli_query($conn, $check_sql);
-        $headline = $name;
-
-        if(mysqli_num_rows($check_result) > 0){
-            $profile_sql = "UPDATE seeker_profiles SET headline='$headline', skills='$skills', years_experience='$experience' WHERE user_id='$user_id'";
-        } else {
-            $profile_sql = "INSERT INTO seeker_profiles (user_id, headline, skills, years_experience) VALUES ('$user_id', '$headline', '$skills', '$experience')";
+    if ($jobModel->updateUserProfile($user_id, $name, $email, $skills, $experience)) {
+        if($resume_name != "") {
+            $stmt = $jobModel->conn->prepare("UPDATE users SET resume=? WHERE id=?");
+            $stmt->bind_param('si', $resume_name, $user_id);
+            $stmt->execute();
         }
-
-        if(mysqli_query($conn, $profile_sql)) {
-            $_SESSION['name'] = $name;
-            $_SESSION['email'] = $email;
-            if($resume_name != "") {
-                $_SESSION['file_path'] = $resume_path;
-            }
-<<<<<<< HEAD
-            echo "<script>alert('Your Profile is Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
-=======
-            echo "<script>alert('Profile Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
->>>>>>> student3
-        } else {
-            echo "Error: " . mysqli_error($conn);
-        }
+        $_SESSION['user_name'] = $name; 
+        echo "<script>alert('Profile Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo "Error updating profile.";
     }
 }
 ?>
