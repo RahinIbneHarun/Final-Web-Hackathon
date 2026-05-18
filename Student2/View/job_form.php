@@ -52,35 +52,47 @@ $deadline_value = $old["deadline"] ?? ($job["deadline"] ?? "");
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #f8f8f8;
-                color: #222;
+                margin: 0;
+                padding: 24px;
+                background-color: #eef6f0;
+                color: #1f3527;
+            }
+            h1{
+                color: #14532d;
+                margin-top: 0;
             }
             a{
-                color: #1a5fb4;
+                color: #166534;
                 text-decoration: none;
+                font-weight: bold;
             }
             a:hover{
                 text-decoration: underline;
             }
             fieldset{
-                background-color: #fff;
-                border: 1px solid #ccc;
-                padding: 15px;
-                margin-bottom: 15px;
+                background-color: #ffffff;
+                border: 1px solid #cfe3d3;
+                padding: 16px;
+                margin-bottom: 16px;
             }
             input[type="text"], input[type="date"], select, textarea{
                 width: 100%;
                 max-width: 650px;
-                padding: 8px;
-                border: 1px solid #bbb;
+                padding: 9px;
+                border: 1px solid #b8d3bf;
                 box-sizing: border-box;
+                border-radius: 4px;
             }
             input[type="submit"]{
                 padding: 8px 14px;
-                border: 1px solid #999;
-                background-color: #f4f4f4;
+                border: 1px solid #198754;
+                background-color: #198754;
+                color: #ffffff;
                 cursor: pointer;
+                border-radius: 4px;
+            }
+            input[type="submit"]:hover{
+                background-color: #146c43;
             }
         </style>
     </head>

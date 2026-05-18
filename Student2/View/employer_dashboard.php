@@ -30,13 +30,19 @@ unset($_SESSION["job_message"]);
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #f8f8f8;
-                color: #222;
+                margin: 0;
+                padding: 24px;
+                background-color: #eef6f0;
+                color: #1f3527;
+            }
+            h1{
+                color: #14532d;
+                margin-top: 0;
             }
             a{
-                color: #1a5fb4;
+                color: #166534;
                 text-decoration: none;
+                font-weight: bold;
             }
             a:hover{
                 text-decoration: underline;
@@ -44,27 +50,40 @@ unset($_SESSION["job_message"]);
             table{
                 border-collapse: collapse;
                 width: 100%;
-                background-color: #fff;
+                background-color: #ffffff;
+                border: 1px solid #cfe3d3;
             }
             th, td{
-                padding: 10px;
+                padding: 12px;
                 text-align: left;
+                border-bottom: 1px solid #dbe9de;
             }
             th{
-                background-color: #efefef;
+                background-color: #dff0e3;
+                color: #14532d;
             }
             button, input[type="submit"]{
-                padding: 5px 10px;
-                border: 1px solid #999;
-                background-color: #f4f4f4;
+                padding: 8px 14px;
+                border: 1px solid #198754;
+                background-color: #198754;
+                color: #ffffff;
                 cursor: pointer;
+                border-radius: 4px;
+            }
+            button:hover, input[type="submit"]:hover{
+                background-color: #146c43;
             }
             form{
                 margin: 0;
             }
             #toggle_message{
-                color: #1a5fb4;
+                color: #166534;
                 font-weight: bold;
+            }
+            hr{
+                border: none;
+                border-top: 1px solid #cfe3d3;
+                margin: 18px 0;
             }
         </style>
     </head>
