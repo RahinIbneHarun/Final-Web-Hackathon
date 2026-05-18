@@ -3,12 +3,12 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
 if(!isset($_SESSION["role"]) || $_SESSION["role"] != "employer"){
-    echo "Only employer can use this page.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -30,71 +30,32 @@ unset($_SESSION["job_message"]);
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 24px;
-                background-color: #eef6f0;
-                color: #1f3527;
-            }
-            h1{
-                color: #14532d;
-                margin-top: 0;
-            }
-            a{
-                color: #166534;
-                text-decoration: none;
-                font-weight: bold;
-            }
-            a:hover{
-                text-decoration: underline;
+                margin: 24px;
             }
             table{
-                border-collapse: collapse;
                 width: 100%;
-                background-color: #ffffff;
-                border: 1px solid #cfe3d3;
+                border-collapse: collapse;
             }
             th, td{
-                padding: 12px;
+                padding: 10px;
                 text-align: left;
-                border-bottom: 1px solid #dbe9de;
+                vertical-align: top;
             }
-            th{
-                background-color: #dff0e3;
-                color: #14532d;
-            }
-            button, input[type="submit"]{
+            .nav-button, .status-button, input[type="submit"]{
                 padding: 8px 14px;
-                border: 1px solid #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-                border-radius: 4px;
-            }
-            button:hover, input[type="submit"]:hover{
-                background-color: #146c43;
-            }
-            .nav-button{
                 margin-right: 8px;
                 margin-bottom: 8px;
             }
-            .status-button{
-                min-width: 90px;
-                border-color: #198754;
+            input[type="text"]{
+                padding: 8px;
+                width: 320px;
+                max-width: 100%;
+                box-sizing: border-box;
             }
-            .status-label{
-                color: #ffffff;
-                font-weight: bold;
-            }
-            form{
-                margin: 0;
-            }
-            #toggle_message{
-                color: #166534;
-                font-weight: bold;
+            .search-box{
+                margin: 18px 0 12px 0;
             }
             hr{
-                border: none;
-                border-top: 1px solid #cfe3d3;
                 margin: 18px 0;
             }
         </style>
@@ -120,8 +81,12 @@ unset($_SESSION["job_message"]);
         ?>
 
         <p id="toggle_message"></p>
+        <div class="search-box">
+            <label for="jobSearch">Search Job:</label><br>
+            <input type="text" id="jobSearch" placeholder="Search by title, category or status" onkeyup="searchJobs()">
+        </div>
 
-        <table border="1" cellpadding="8" cellspacing="0">
+        <table border="1" cellpadding="8" cellspacing="0" id="jobTable">
             <tr>
                 <th>Title</th>
                 <th>Category</th>
@@ -148,13 +113,13 @@ unset($_SESSION["job_message"]);
                     echo "<td>".$row["deadline"]."</td>";
                     echo "<td>".$row["application_count"]."</td>";
                     echo "<td>
-                            <button type='button' class='status-button' style='background-color: ".$status_background."; border-color: ".$status_background.";' onclick='toggleStatus(".$row["id"].", this)'>
+                            <button type='button' class='status-button' onclick='toggleStatus(".$row["id"].", this)'>
                                 <span class='status-label'>".$status_text."</span>
                             </button>
                           </td>";
                     echo "<td>
                             <button type='button' class='nav-button' onclick=\"window.location.href='job_form.php?id=".$row["id"]."'\">Edit</button>
-                            <form method='post' action='../Controller/jobHandler.php' style='display:inline;' onsubmit='return confirm(\"Delete this job?\")'>
+                            <form method='post' action='../Controller/jobHandler.php' onsubmit='return confirm(\"Delete this job?\")'>
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='".$row["id"]."'>
                                 <input type='submit' value='Delete'>
@@ -169,6 +134,23 @@ unset($_SESSION["job_message"]);
         </table>
 
         <script>
+            function searchJobs(){
+                var input = document.getElementById("jobSearch");
+                var filter = input.value.toLowerCase();
+                var table = document.getElementById("jobTable");
+                var rows = table.getElementsByTagName("tr");
+
+                for(var i = 1; i < rows.length; i++){
+                    var rowText = rows[i].innerText.toLowerCase();
+
+                    if(rowText.indexOf(filter) > -1){
+                        rows[i].style.display = "";
+                    }else{
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+
             function toggleStatus(jobId, button){
                 var request = new XMLHttpRequest();
                 var label = button.querySelector(".status-label");
@@ -183,14 +165,6 @@ unset($_SESSION["job_message"]);
 
                             if(response.success){
                                 label.innerHTML = response.label;
-                                label.style.color = "white";
-                                if(response.color === "green"){
-                                    button.style.backgroundColor = "#198754";
-                                    button.style.borderColor = "#198754";
-                                }else{
-                                    button.style.backgroundColor = "#dc3545";
-                                    button.style.borderColor = "#dc3545";
-                                }
                                 message.innerHTML = "Job status updated successfully.";
                             }else{
                                 message.innerHTML = response.message;

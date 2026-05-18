@@ -3,7 +3,7 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -13,7 +13,7 @@ if((isset($_SESSION["email"]) && $_SESSION["email"] == "admin@jobportal.test") |
 }
 
 if(!$isAdmin){
-    echo "Only admin can use this page.";
+    header("Location: employer_dashboard.php");
     exit();
 }
 
@@ -53,73 +53,29 @@ if($name_value == "" && $isEdit){
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 24px;
-                background-color: #eef6f0;
-                color: #1f3527;
+                margin: 24px;
             }
-            h1, h2{
-                color: #14532d;
+            table{
+                width: 100%;
+                border-collapse: collapse;
             }
-            a{
-                color: #166534;
-                text-decoration: none;
-                font-weight: bold;
-            }
-            a:hover{
-                text-decoration: underline;
-            }
-            input[type="text"], input[type="submit"]{
-                padding: 9px;
-                border: 1px solid #b8d3bf;
-                border-radius: 4px;
+            th, td{
+                padding: 10px;
+                text-align: left;
+                vertical-align: top;
             }
             input[type="text"]{
-                background-color: #ffffff;
+                width: 100%;
+                max-width: 420px;
+                box-sizing: border-box;
+                padding: 8px;
             }
-            input[type="submit"]{
-                border-color: #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-            }
-            input[type="submit"]:hover{
-                background-color: #146c43;
-            }
-            .nav-button{
-                padding: 9px 14px;
-                border: 1px solid #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-                border-radius: 4px;
+            .nav-button, input[type="submit"]{
+                padding: 8px 14px;
                 margin-right: 8px;
                 margin-bottom: 8px;
             }
-            .nav-button:hover{
-                background-color: #146c43;
-            }
-            table{
-                border-collapse: collapse;
-                width: 100%;
-                background-color: #ffffff;
-                border: 1px solid #cfe3d3;
-            }
-            th, td{
-                padding: 12px;
-                text-align: left;
-                border-bottom: 1px solid #dbe9de;
-            }
-            th{
-                background-color: #dff0e3;
-                color: #14532d;
-            }
-            form{
-                margin: 0;
-            }
             hr{
-                border: none;
-                border-top: 1px solid #cfe3d3;
                 margin: 18px 0;
             }
         </style>
@@ -174,7 +130,7 @@ if($name_value == "" && $isEdit){
                     echo "<td>".$row["job_count"]."</td>";
                     echo "<td>
                             <button type='button' class='nav-button' onclick=\"window.location.href='category_panel.php?edit=".$row["id"]."'\">Edit</button>
-                            <form method='post' action='../Controller/categoryHandler.php' style='display:inline;' onsubmit='return confirm(\"Delete this category?\")'>
+                            <form method='post' action='../Controller/categoryHandler.php' onsubmit='return confirm(\"Delete this category?\")'>
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='".$row["id"]."'>
                                 <input type='submit' value='Delete'>

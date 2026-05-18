@@ -3,12 +3,12 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
 if(!isset($_SESSION["role"]) || $_SESSION["role"] != "employer"){
-    echo "Only employer can use this page.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -27,7 +27,7 @@ if($job_id){
         $job = $result->fetch_assoc();
         $isEdit = true;
     }else{
-        echo "You can edit only your own jobs.";
+        header("Location: employer_dashboard.php");
         exit();
     }
 }
@@ -52,59 +52,21 @@ $deadline_value = $old["deadline"] ?? ($job["deadline"] ?? "");
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 24px;
-                background-color: #eef6f0;
-                color: #1f3527;
-            }
-            h1{
-                color: #14532d;
-                margin-top: 0;
-            }
-            a{
-                color: #166534;
-                text-decoration: none;
-                font-weight: bold;
-            }
-            a:hover{
-                text-decoration: underline;
+                margin: 24px;
             }
             fieldset{
-                background-color: #ffffff;
-                border: 1px solid #cfe3d3;
-                padding: 16px;
                 margin-bottom: 16px;
+                padding: 14px;
             }
             input[type="text"], input[type="date"], select, textarea{
                 width: 100%;
                 max-width: 650px;
-                padding: 9px;
-                border: 1px solid #b8d3bf;
                 box-sizing: border-box;
-                border-radius: 4px;
+                padding: 8px;
             }
-            input[type="submit"]{
+            .nav-button, input[type="submit"]{
                 padding: 8px 14px;
-                border: 1px solid #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-                border-radius: 4px;
-            }
-            input[type="submit"]:hover{
-                background-color: #146c43;
-            }
-            .nav-button{
-                padding: 9px 14px;
-                border: 1px solid #198754;
-                background-color: #198754;
-                color: #ffffff;
-                cursor: pointer;
-                border-radius: 4px;
-                margin-bottom: 10px;
-            }
-            .nav-button:hover{
-                background-color: #146c43;
+                margin-bottom: 8px;
             }
         </style>
     </head>

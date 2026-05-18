@@ -3,7 +3,7 @@ include "../Model/DatabaseConnection.php";
 session_start();
 
 if(!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]){
-    echo "Please login first.";
+    header("Location: ../../Student1/View/login.php");
     exit();
 }
 
@@ -13,7 +13,7 @@ if((isset($_SESSION["email"]) && $_SESSION["email"] == "admin@jobportal.test") |
 }
 
 if(!$isAdmin){
-    echo "Only admin can use this page.";
+    header("Location: ../View/employer_dashboard.php");
     exit();
 }
 
