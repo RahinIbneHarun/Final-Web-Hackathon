@@ -48,10 +48,14 @@ if (isset($_POST['update_profile'])) {
                 $_SESSION['file_path'] = $resume_path;
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             echo "<script>alert('Your Profile is Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
 =======
             echo "<script>alert('Profile Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
 >>>>>>> student3
+=======
+            echo "<script>alert('Profile Updated in Database!'); window.location.href='../../View/html/profile.php';</script>";
+>>>>>>> e9c6cbe51d1eaedfd49f31acee1d609ab41a6423
         } else {
             echo "Error: " . mysqli_error($conn);
         }

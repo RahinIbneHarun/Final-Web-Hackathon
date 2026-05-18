@@ -4,12 +4,17 @@ include '../../db.php';
 /** @var mysqli $conn */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 if(!isset($_SESSION['isLoggedIn']) || $_SESSION['isLoggedIn'] !== true || ($_SESSION['role'] ?? '') != 'seeker'){
     echo '<p style="grid-column: 1/-1; text-align:center; color:red;">Please login first.</p>';
 =======
 if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
     echo '<p style="grid-column: 1/-1; text-align:center;">Please login first.</p>';
 >>>>>>> student3
+=======
+if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
+    echo '<p style="grid-column: 1/-1; text-align:center;">Please login first.</p>';
+>>>>>>> e9c6cbe51d1eaedfd49f31acee1d609ab41a6423
     exit();
 }
 
@@ -17,6 +22,7 @@ $query = isset($_GET['query']) ? $_GET['query'] : '';
 
 if($query != "") {
     $safe_query = mysqli_real_escape_string($conn, $query);
+<<<<<<< HEAD
 <<<<<<< HEAD
     $sql = "SELECT * FROM jobs WHERE (title LIKE '%$safe_query%' OR location LIKE '%$safe_query%') AND status = 'active' ORDER BY id DESC";
 } else {
@@ -26,6 +32,8 @@ $result = mysqli_query($conn, $sql);
 if(mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
 =======
+=======
+>>>>>>> e9c6cbe51d1eaedfd49f31acee1d609ab41a6423
 
     $sql = "SELECT * FROM jobs WHERE (title LIKE '%$safe_query%' OR location LIKE '%$safe_query%') AND status = 'active'";
     $result = mysqli_query($conn, $sql);
@@ -55,11 +63,15 @@ if(mysqli_num_rows($result) > 0) {
     $result = mysqli_query($conn, $sql);
     while($row = mysqli_fetch_assoc($result)) {
         
+<<<<<<< HEAD
 >>>>>>> student3
+=======
+>>>>>>> e9c6cbe51d1eaedfd49f31acee1d609ab41a6423
         $emp_id = $row['employer_id'];
         $emp_sql = "SELECT company_name FROM employer_profiles WHERE user_id = $emp_id";
         $emp_result = mysqli_query($conn, $emp_sql);
         $emp_row = mysqli_fetch_assoc($emp_result);
+<<<<<<< HEAD
 <<<<<<< HEAD
         
         $company_name = isset($emp_row['company_name']) ? $emp_row['company_name'] : 'N/A';
@@ -67,6 +79,10 @@ if(mysqli_num_rows($result) > 0) {
         $company_name = isset($emp_row['company_name']) ? $emp_row['company_name'] : 'N/A';
 
 >>>>>>> student3
+=======
+        $company_name = isset($emp_row['company_name']) ? $emp_row['company_name'] : 'N/A';
+
+>>>>>>> e9c6cbe51d1eaedfd49f31acee1d609ab41a6423
         echo '<div class="job-box">
                 <h4>' . $row['title'] . '</h4>
                 <p><strong>Company:</strong> ' . $company_name . '</p>
@@ -76,9 +92,12 @@ if(mysqli_num_rows($result) > 0) {
               </div>';
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 } else {
     echo '<p style="grid-column: 1/-1; text-align:center;">No jobs found.</p>';
 =======
 >>>>>>> student3
+=======
+>>>>>>> e9c6cbe51d1eaedfd49f31acee1d609ab41a6423
 }
 ?>
