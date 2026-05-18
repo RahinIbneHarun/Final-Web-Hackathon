@@ -58,7 +58,7 @@ class JobModel {
     }
 
     public function applyJob($job_id, $seeker_id, $cover_letter, $resume_path) {
-        $status = 'pending';
+        $status = 'Submitted';
         $stmt = $this->conn->prepare("INSERT INTO applications (job_id, seeker_id, cover_letter, resume_path, status) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param('iisss', $job_id, $seeker_id, $cover_letter, $resume_path, $status);
         return $stmt->execute();
