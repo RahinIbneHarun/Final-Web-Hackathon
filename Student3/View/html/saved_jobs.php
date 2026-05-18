@@ -1,14 +1,11 @@
 <?php
 session_start();
 include '../../db.php'; 
+require_once '../../Model/JobModel.php';
 /** @var mysqli $conn */
 
-if(!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || ($_SESSION['role'] ?? '') != 'seeker'){
-    header("Location: ../../../Student1/View/login.php");
-    exit();
-}
-
-$user_id = intval($_SESSION['user_id']); 
+$jobModel = new JobModel();
+$user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,24 +20,16 @@ $user_id = intval($_SESSION['user_id']);
         <div class="job-grid">
             
             <?php
-            $sql = "SELECT * FROM saved_jobs WHERE user_id = $user_id ORDER BY created_at DESC";
-            $result = mysqli_query($conn, $sql);
+            $result = $jobModel->getSavedJobsByUser($user_id);
 
-            if (mysqli_num_rows($result) > 0) {
-                while($saved_row = mysqli_fetch_assoc($result)) {
-                    
+            if ($result && $result->num_rows > 0) {
+                while($saved_row = $result->fetch_assoc()) {
                     $job_id = $saved_row['job_id'];
-                    
-                    $job_sql = "SELECT * FROM jobs WHERE id = $job_id";
-                    $job_result = mysqli_query($conn, $job_sql);
-                    $job_row = mysqli_fetch_assoc($job_result);
-                    
+                    $job_row = $jobModel->getJobById($job_id);
                     if ($job_row) {
                         $emp_id = $job_row['employer_id'];
-                        $emp_sql = "SELECT company_name FROM employer_profiles WHERE user_id = $emp_id";
-                        $emp_result = mysqli_query($conn, $emp_sql);
-                        $emp_row = mysqli_fetch_assoc($emp_result);
-                        $company_name = isset($emp_row['company_name']) ? $emp_row['company_name'] : 'N/A';
+                        $company_name = $jobModel->getCompanyNameByUserId($emp_id);
+                        $company_name = $company_name ? $company_name : 'N/A';
                         ?>
                         <div class="job-box">
                             <h4><?php echo $job_row['title']; ?></h4>
@@ -61,7 +50,7 @@ $user_id = intval($_SESSION['user_id']);
         </div>
         <br><br>
         <div style="text-align: center;">
-            <button type="button" class="nav-button" onclick="window.location.href='home.php'">Back to Dashboard</button>
+            <a href="home.php">Back to Dashboard</a>
         </div>
     </div>
     
