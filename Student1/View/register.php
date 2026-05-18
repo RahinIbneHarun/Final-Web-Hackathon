@@ -12,68 +12,24 @@ unset($_SESSION["reg_errors"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8fafc;
-            color: #1f2937;
+            margin: 24px;
         }
         .register-card{
-            width: 100%;
             max-width: 620px;
-            background-color: #ffffff;
-            padding: 28px;
-            border: 1px solid #dbe4f0;
-            border-radius: 14px;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
         }
-        .error{
-            color: #dc2626;
-            font-size: 14px;
-        }
-        input[type="text"], input[type="email"], input[type="password"]{
-            padding: 10px;
+        input[type="text"], input[type="email"], input[type="password"], input[type="file"]{
             width: 100%;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
             box-sizing: border-box;
-            margin-top: 6px;
-        }
-        input[type="file"]{
-            margin-top: 6px;
-        }
-        button[type="submit"]{
-            padding: 10px 16px;
-            border: 1px solid #0f766e;
-            background-color: #0f766e;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        button[type="submit"]:hover{
-            background-color: #0d5f59;
-        }
-        .nav-button{
-            padding: 8px 14px;
-            border: 1px solid #0f766e;
-            background-color: #0f766e;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .nav-button:hover{
-            background-color: #0d5f59;
-        }
-        h2{
-            margin-top: 0;
-            color: #0f172a;
+            padding: 8px;
         }
         .radio-row{
-            margin-top: 6px;
+            margin-top: 8px;
+        }
+        .nav-button, button[type="submit"]{
+            padding: 8px 14px;
         }
     </style>
+    <script src="../Controller/JS/formValidation.js"></script>
 </head>
 <body>
     <div class="register-card">
@@ -83,12 +39,12 @@ unset($_SESSION["reg_errors"]);
 
     <form action="../Controller/AuthController.php" method="POST" enctype="multipart/form-data">
         <label>Name:</label><br>
-        <input type="text" name="name" value="<?php echo $old["name"] ?? ""; ?>">
-        <span class="error"><?php echo $errors["name"] ?? ""; ?></span><br><br>
+        <input type="text" id="register_name" name="name" value="<?php echo $old["name"] ?? ""; ?>" onkeyup="checkRegisterName()">
+        <span class="error" id="registerNameResponse"><?php echo $errors["name"] ?? ""; ?></span><br><br>
 
         <label>Email:</label><br>
-        <input type="email" name="email" value="<?php echo $old["email"] ?? ""; ?>">
-        <span class="error"><?php echo $errors["email"] ?? ""; ?></span><br><br>
+        <input type="email" id="register_email" name="email" value="<?php echo $old["email"] ?? ""; ?>" onkeyup="checkRegisterEmail()">
+        <span class="error" id="registerEmailResponse"><?php echo $errors["email"] ?? ""; ?></span><br><br>
 
         <label>Password (Min 8 chars):</label><br>
         <input type="password" name="password">

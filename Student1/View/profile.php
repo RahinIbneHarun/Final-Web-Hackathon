@@ -37,67 +37,23 @@ unset($_SESSION["profile_message"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 28px;
-            background-color: #f8fafc;
-            color: #1f2937;
+            margin: 24px;
         }
         .profile-card{
             max-width: 860px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 28px;
-            border: 1px solid #dbe4f0;
-            border-radius: 14px;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
         }
         fieldset{
-            background-color: #f8fbff;
-            border: 1px solid #d7e2f2;
-            padding: 18px;
-            margin-bottom: 18px;
-            border-radius: 10px;
+            margin-bottom: 16px;
+            padding: 14px;
         }
-        input[type="text"], input[type="password"], input[type="number"], textarea{
-            padding: 10px;
+        input[type="text"], input[type="password"], input[type="number"], textarea, input[type="file"]{
             width: 100%;
             max-width: 650px;
             box-sizing: border-box;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
+            padding: 8px;
         }
-        .error{
-            color: #dc2626;
-        }
-        .success{
-            color: #2563eb;
-            font-weight: bold;
-        }
-        .nav-button{
+        .nav-button, input[type="submit"]{
             padding: 8px 14px;
-            border: 1px solid #334155;
-            background-color: #334155;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .nav-button:hover{
-            background-color: #1e293b;
-        }
-        input[type="submit"]{
-            padding: 10px 16px;
-            border: 1px solid #334155;
-            background-color: #334155;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        input[type="submit"]:hover{
-            background-color: #1e293b;
-        }
-        h2{
-            margin-top: 0;
-            color: #0f172a;
         }
     </style>
 </head>

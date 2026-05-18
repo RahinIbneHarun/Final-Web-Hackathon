@@ -25,50 +25,23 @@ unset($_SESSION["profile_message"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 28px;
-            background: linear-gradient(180deg, #fff7ed 0%, #fffaf4 100%);
-            color: #3f3f46;
+            margin: 24px;
         }
         .dashboard-card{
             max-width: 900px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 28px;
-            border: 1px solid #fde2c4;
-            border-radius: 14px;
-            box-shadow: 0 10px 24px rgba(234, 88, 12, 0.08);
         }
-        .notice{
-            border: 1px solid #fca5a5;
-            background-color: #fef2f2;
-            color: #b91c1c;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-        .success{
-            color: #c2410c;
-            font-weight: bold;
+        .button-row{
+            margin-top: 14px;
         }
         .nav-button{
             padding: 8px 14px;
-            border: 1px solid #ea580c;
-            background-color: #ea580c;
-            color: #ffffff;
-            cursor: pointer;
-            margin: 0 8px 8px 0;
-            border-radius: 8px;
+            margin-right: 8px;
+            margin-bottom: 8px;
         }
-        .nav-button:hover{
-            background-color: #c2410c;
-        }
-        .button-row{
-            margin-top: 15px;
-        }
-        h2{
-            margin-top: 0;
-            color: #c2410c;
+        .notice{
+            padding: 12px;
+            margin-bottom: 14px;
+            border: 1px solid;
         }
     </style>
 </head>

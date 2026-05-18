@@ -24,72 +24,26 @@ unset($_SESSION["login_old_email"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #eef2ff;
-            color: #1e293b;
+            margin: 24px;
         }
         .login-card{
-            width: 100%;
             max-width: 560px;
-            background-color: #ffffff;
-            padding: 28px;
-            border: 1px solid #d8def5;
-            border-radius: 14px;
-            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.10);
         }
         table{
             width: 100%;
-            background-color: #fff;
             border-collapse: collapse;
-            border: 1px solid #d8def5;
         }
         td{
-            padding: 12px;
+            padding: 10px;
             vertical-align: top;
         }
         input{
-            padding: 10px;
             width: 100%;
-            border: 1px solid #c7d2fe;
-            border-radius: 8px;
             box-sizing: border-box;
+            padding: 8px;
         }
-        input[type="submit"]{
-            background-color: #2563eb;
-            border: 1px solid #2563eb;
-            color: #ffffff;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover{
-            background-color: #1d4ed8;
-        }
-        .message{
-            color: #dc2626;
-            margin: 0;
-        }
-        .success{
-            color: #1d4ed8;
-            font-weight: bold;
-        }
-        .nav-button{
+        .nav-button, input[type="submit"]{
             padding: 8px 14px;
-            border: 1px solid #2563eb;
-            background-color: #2563eb;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .nav-button:hover{
-            background-color: #1d4ed8;
-        }
-        h2{
-            margin-top: 0;
-            margin-bottom: 18px;
-            color: #1e3a8a;
         }
     </style>
 </head>
@@ -108,7 +62,7 @@ unset($_SESSION["login_old_email"]);
 
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="password" placeholder="Enter your password" required /></td>
+                <td><input type="password" id="login_password" name="password" placeholder="Enter your password" required /></td>
             </tr>
 
             <tr>
