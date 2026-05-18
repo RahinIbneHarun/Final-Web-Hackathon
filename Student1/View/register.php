@@ -12,26 +12,71 @@ unset($_SESSION["reg_errors"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f8f8f8;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+        .register-card{
+            width: 100%;
+            max-width: 620px;
+            background-color: #ffffff;
+            padding: 28px;
+            border: 1px solid #dbe4f0;
+            border-radius: 14px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
         }
         .error{
-            color: red;
+            color: #dc2626;
             font-size: 14px;
         }
         input[type="text"], input[type="email"], input[type="password"]{
-            padding: 8px;
-            width: 320px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-top: 6px;
+        }
+        input[type="file"]{
+            margin-top: 6px;
+        }
+        button[type="submit"]{
+            padding: 10px 16px;
+            border: 1px solid #0f766e;
+            background-color: #0f766e;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        button[type="submit"]:hover{
+            background-color: #0d5f59;
         }
         .nav-button{
             padding: 8px 14px;
-            border: 1px solid #999;
-            background-color: #f4f4f4;
+            border: 1px solid #0f766e;
+            background-color: #0f766e;
+            color: #ffffff;
             cursor: pointer;
+            border-radius: 8px;
+        }
+        .nav-button:hover{
+            background-color: #0d5f59;
+        }
+        h2{
+            margin-top: 0;
+            color: #0f172a;
+        }
+        .radio-row{
+            margin-top: 6px;
         }
     </style>
 </head>
 <body>
+    <div class="register-card">
     <h2>Registration</h2>
 
     <?php if(isset($errors["db"])) echo "<p class='error'>".$errors["db"]."</p>"; ?>
@@ -50,8 +95,10 @@ unset($_SESSION["reg_errors"]);
         <span class="error"><?php echo $errors["password"] ?? ""; ?></span><br><br>
 
         <label>Role:</label><br>
+        <div class="radio-row">
         <input type="radio" name="role" value="employer" <?php if(($old["role"] ?? "") == "employer"){ echo "checked"; } ?>> Employer
         <input type="radio" name="role" value="seeker" <?php if(($old["role"] ?? "") == "seeker"){ echo "checked"; } ?>> Job Seeker
+        </div>
         <br><span class="error"><?php echo $errors["role"] ?? ""; ?></span><br><br>
 
         <label>Upload Logo (Employer) or Resume PDF (Seeker) - Max 2MB:</label><br>
@@ -62,5 +109,6 @@ unset($_SESSION["reg_errors"]);
     </form>
 
     <p><button type="button" class="nav-button" onclick="window.location.href='login.php'">Back to Login</button></p>
+    </div>
 </body>
 </html>

@@ -26,33 +26,55 @@ unset($_SESSION["profile_message"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f8f8f8;
+            margin: 0;
+            padding: 28px;
+            background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+            color: #1e293b;
+        }
+        .dashboard-card{
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 28px;
+            border: 1px solid #d7e2f2;
+            border-radius: 14px;
+            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.10);
         }
         .notice{
-            border: 1px solid red;
-            background-color: #ffdddd;
-            color: red;
-            padding: 10px;
+            border: 1px solid #fca5a5;
+            background-color: #fef2f2;
+            color: #b91c1c;
+            padding: 12px;
             margin-bottom: 15px;
+            border-radius: 8px;
         }
         .success{
-            color: green;
+            color: #2563eb;
             font-weight: bold;
         }
         .nav-button{
             padding: 8px 14px;
-            border: 1px solid #999;
-            background-color: #f4f4f4;
+            border: 1px solid #2563eb;
+            background-color: #2563eb;
+            color: #ffffff;
             cursor: pointer;
             margin: 0 8px 8px 0;
+            border-radius: 8px;
+        }
+        .nav-button:hover{
+            background-color: #1d4ed8;
         }
         .button-row{
             margin-top: 15px;
         }
+        h2{
+            margin-top: 0;
+            color: #1e3a8a;
+        }
     </style>
 </head>
 <body>
+    <div class="dashboard-card">
     <h2>Employer Dashboard</h2>
     <p>Welcome, <?php echo $name; ?>!</p>
     <p>Email: <?php echo $email; ?></p>
@@ -79,6 +101,7 @@ unset($_SESSION["profile_message"]);
 
     <div class="button-row">
         <button type="button" class="nav-button" onclick="window.location.href='../Controller/logout.php'">Logout</button>
+    </div>
     </div>
 </body>
 </html>

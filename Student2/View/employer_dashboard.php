@@ -109,6 +109,7 @@ unset($_SESSION["job_message"]);
             echo "<button type='button' class='nav-button' onclick=\"window.location.href='category_panel.php'\">Manage Categories</button>";
         }
         ?>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student1/Controller/logout.php'">Logout</button>
 
         <hr>
 

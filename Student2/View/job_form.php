@@ -111,6 +111,7 @@ $deadline_value = $old["deadline"] ?? ($job["deadline"] ?? "");
     <body>
         <h1><?php if($isEdit){ echo "Edit Job"; }else{ echo "Create Job"; } ?></h1>
         <button type="button" class="nav-button" onclick="window.location.href='employer_dashboard.php'">Back to Dashboard</button>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student1/Controller/logout.php'">Logout</button>
 
         <?php
         if(isset($errors["general"])){
