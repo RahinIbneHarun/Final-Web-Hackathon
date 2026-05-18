@@ -53,41 +53,37 @@ if($name_value == "" && $isEdit){
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #f8f8f8;
-                color: #222;
-            }
-            a{
-                color: #1a5fb4;
-                text-decoration: none;
-            }
-            a:hover{
-                text-decoration: underline;
-            }
-            input[type="text"], input[type="submit"]{
-                padding: 8px;
-                border: 1px solid #bbb;
+                margin: 24px;
             }
             table{
-                border-collapse: collapse;
                 width: 100%;
-                background-color: #fff;
+                border-collapse: collapse;
             }
             th, td{
                 padding: 10px;
                 text-align: left;
+                vertical-align: top;
             }
-            th{
-                background-color: #efefef;
+            input[type="text"]{
+                width: 100%;
+                max-width: 420px;
+                box-sizing: border-box;
+                padding: 8px;
             }
-            form{
-                margin: 0;
+            .nav-button, input[type="submit"]{
+                padding: 8px 14px;
+                margin-right: 8px;
+                margin-bottom: 8px;
+            }
+            hr{
+                margin: 18px 0;
             }
         </style>
     </head>
     <body>
         <h1>Admin Category Panel</h1>
-        <a href="employer_dashboard.php">Back to Dashboard</a>
+        <button type="button" class="nav-button" onclick="window.location.href='employer_dashboard.php'">Back to Dashboard</button>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student1/Controller/logout.php'">Logout</button>
 
         <hr>
 
@@ -114,7 +110,7 @@ if($name_value == "" && $isEdit){
             <?php echo $name_error; ?>
             <br><br>
             <input type="submit" value="<?php if($isEdit){ echo "Update Category"; }else{ echo "Create Category"; } ?>">
-            <a href="category_panel.php">Reset</a>
+            <button type="button" class="nav-button" onclick="window.location.href='category_panel.php'">Reset</button>
         </form>
 
         <h2>All Categories</h2>
@@ -133,8 +129,8 @@ if($name_value == "" && $isEdit){
                     echo "<td>".$row["name"]."</td>";
                     echo "<td>".$row["job_count"]."</td>";
                     echo "<td>
-                            <a href='category_panel.php?edit=".$row["id"]."'>Edit</a>
-                            <form method='post' action='../Controller/categoryHandler.php' style='display:inline;' onsubmit='return confirm(\"Delete this category?\")'>
+                            <button type='button' class='nav-button' onclick=\"window.location.href='category_panel.php?edit=".$row["id"]."'\">Edit</button>
+                            <form method='post' action='../Controller/categoryHandler.php' onsubmit='return confirm(\"Delete this category?\")'>
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='".$row["id"]."'>
                                 <input type='submit' value='Delete'>

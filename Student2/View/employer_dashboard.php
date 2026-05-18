@@ -30,54 +30,47 @@ unset($_SESSION["job_message"]);
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #f8f8f8;
-                color: #222;
-            }
-            a{
-                color: #1a5fb4;
-                text-decoration: none;
-            }
-            a:hover{
-                text-decoration: underline;
+                margin: 24px;
             }
             table{
-                border-collapse: collapse;
                 width: 100%;
-                background-color: #fff;
+                border-collapse: collapse;
             }
             th, td{
                 padding: 10px;
                 text-align: left;
+                vertical-align: top;
             }
-            th{
-                background-color: #efefef;
+            .nav-button, .status-button, input[type="submit"]{
+                padding: 8px 14px;
+                margin-right: 8px;
+                margin-bottom: 8px;
             }
-            button, input[type="submit"]{
-                padding: 5px 10px;
-                border: 1px solid #999;
-                background-color: #f4f4f4;
-                cursor: pointer;
+            input[type="text"]{
+                padding: 8px;
+                width: 320px;
+                max-width: 100%;
+                box-sizing: border-box;
             }
-            form{
-                margin: 0;
+            .search-box{
+                margin: 18px 0 12px 0;
             }
-            #toggle_message{
-                color: #1a5fb4;
-                font-weight: bold;
+            hr{
+                margin: 18px 0;
             }
         </style>
     </head>
     <body>
         <h1>Employer Job Dashboard</h1>
         <p>Hello, <?php echo $_SESSION["name"] ?? "Employer"; ?></p>
-        <a href="job_form.php">Post New Job</a>
-        | <a href="../../Student4/View/applications_dashboard.php">Open Student4 Applications Dashboard</a>
+        <button type="button" class="nav-button" onclick="window.location.href='job_form.php'">Post New Job</button>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student4/View/applications_dashboard.php'">Applications Dashboard</button>
         <?php
         if($isAdmin){
-            echo " | <a href='category_panel.php'>Manage Categories</a>";
+            echo "<button type='button' class='nav-button' onclick=\"window.location.href='category_panel.php'\">Manage Categories</button>";
         }
         ?>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student1/Controller/logout.php'">Logout</button>
 
         <hr>
 
@@ -88,8 +81,12 @@ unset($_SESSION["job_message"]);
         ?>
 
         <p id="toggle_message"></p>
+        <div class="search-box">
+            <label for="jobSearch">Search Job:</label><br>
+            <input type="text" id="jobSearch" placeholder="Search by title, category or status" onkeyup="searchJobs()">
+        </div>
 
-        <table border="1" cellpadding="8" cellspacing="0">
+        <table border="1" cellpadding="8" cellspacing="0" id="jobTable">
             <tr>
                 <th>Title</th>
                 <th>Category</th>
@@ -103,11 +100,11 @@ unset($_SESSION["job_message"]);
             if($jobs && $jobs->num_rows > 0){
                 while($row = $jobs->fetch_assoc()){
                     $status_text = "Closed";
-                    $status_color = "red";
+                    $status_background = "#dc3545";
 
                     if($row["status"] == "active"){
                         $status_text = "Active";
-                        $status_color = "green";
+                        $status_background = "#198754";
                     }
 
                     echo "<tr>";
@@ -116,13 +113,13 @@ unset($_SESSION["job_message"]);
                     echo "<td>".$row["deadline"]."</td>";
                     echo "<td>".$row["application_count"]."</td>";
                     echo "<td>
-                            <button type='button' onclick='toggleStatus(".$row["id"].", this)'>
-                                <font color='".$status_color."' class='status-label'>".$status_text."</font>
+                            <button type='button' class='status-button' onclick='toggleStatus(".$row["id"].", this)'>
+                                <span class='status-label'>".$status_text."</span>
                             </button>
                           </td>";
                     echo "<td>
-                            <a href='job_form.php?id=".$row["id"]."'>Edit</a>
-                            <form method='post' action='../Controller/jobHandler.php' style='display:inline;' onsubmit='return confirm(\"Delete this job?\")'>
+                            <button type='button' class='nav-button' onclick=\"window.location.href='job_form.php?id=".$row["id"]."'\">Edit</button>
+                            <form method='post' action='../Controller/jobHandler.php' onsubmit='return confirm(\"Delete this job?\")'>
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='".$row["id"]."'>
                                 <input type='submit' value='Delete'>
@@ -137,6 +134,23 @@ unset($_SESSION["job_message"]);
         </table>
 
         <script>
+            function searchJobs(){
+                var input = document.getElementById("jobSearch");
+                var filter = input.value.toLowerCase();
+                var table = document.getElementById("jobTable");
+                var rows = table.getElementsByTagName("tr");
+
+                for(var i = 1; i < rows.length; i++){
+                    var rowText = rows[i].innerText.toLowerCase();
+
+                    if(rowText.indexOf(filter) > -1){
+                        rows[i].style.display = "";
+                    }else{
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+
             function toggleStatus(jobId, button){
                 var request = new XMLHttpRequest();
                 var label = button.querySelector(".status-label");
@@ -151,7 +165,6 @@ unset($_SESSION["job_message"]);
 
                             if(response.success){
                                 label.innerHTML = response.label;
-                                label.color = response.color;
                                 message.innerHTML = "Job status updated successfully.";
                             }else{
                                 message.innerHTML = response.message;

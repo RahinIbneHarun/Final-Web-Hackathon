@@ -52,41 +52,28 @@ $deadline_value = $old["deadline"] ?? ($job["deadline"] ?? "");
         <style>
             body{
                 font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #f8f8f8;
-                color: #222;
-            }
-            a{
-                color: #1a5fb4;
-                text-decoration: none;
-            }
-            a:hover{
-                text-decoration: underline;
+                margin: 24px;
             }
             fieldset{
-                background-color: #fff;
-                border: 1px solid #ccc;
-                padding: 15px;
-                margin-bottom: 15px;
+                margin-bottom: 16px;
+                padding: 14px;
             }
             input[type="text"], input[type="date"], select, textarea{
                 width: 100%;
                 max-width: 650px;
-                padding: 8px;
-                border: 1px solid #bbb;
                 box-sizing: border-box;
+                padding: 8px;
             }
-            input[type="submit"]{
+            .nav-button, input[type="submit"]{
                 padding: 8px 14px;
-                border: 1px solid #999;
-                background-color: #f4f4f4;
-                cursor: pointer;
+                margin-bottom: 8px;
             }
         </style>
     </head>
     <body>
         <h1><?php if($isEdit){ echo "Edit Job"; }else{ echo "Create Job"; } ?></h1>
-        <a href="employer_dashboard.php">Back to Dashboard</a>
+        <button type="button" class="nav-button" onclick="window.location.href='employer_dashboard.php'">Back to Dashboard</button>
+        <button type="button" class="nav-button" onclick="window.location.href='../../Student1/Controller/logout.php'">Logout</button>
 
         <?php
         if(isset($errors["general"])){
