@@ -25,31 +25,6 @@ unset($_SESSION["profile_message"]);
     <style>
         body{
             font-family: Arial, sans-serif;
-<<<<<<< HEAD
-            margin: 20px;
-            background-color: #f8f8f8;
-        }
-        .notice{
-            border: 1px solid red;
-            background-color: #ffdddd;
-            color: red;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        .success{
-            color: green;
-            font-weight: bold;
-        }
-        .nav-button{
-            padding: 8px 14px;
-            border: 1px solid #999;
-            background-color: #f4f4f4;
-            cursor: pointer;
-            margin: 0 8px 8px 0;
-        }
-        .button-row{
-            margin-top: 15px;
-=======
             margin: 24px;
         }
         .dashboard-card{
@@ -67,15 +42,11 @@ unset($_SESSION["profile_message"]);
             padding: 12px;
             margin-bottom: 14px;
             border: 1px solid;
->>>>>>> 6ceca37 (updated project)
         }
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-=======
     <div class="dashboard-card">
->>>>>>> 6ceca37 (updated project)
     <h2>Job Board</h2>
     <p>Welcome, <?php echo $name; ?>!</p>
 
@@ -92,9 +63,6 @@ unset($_SESSION["profile_message"]);
         <button type="button" class="nav-button" onclick="window.location.href='../../Student3/View/html/home.php'">Open Job Board</button>
         <button type="button" class="nav-button" onclick="window.location.href='../Controller/logout.php'">Logout</button>
     </div>
-<<<<<<< HEAD
-=======
     </div>
->>>>>>> 6ceca37 (updated project)
 </body>
 </html>
